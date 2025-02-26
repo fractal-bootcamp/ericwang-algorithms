@@ -31,6 +31,7 @@ export function binarySearch(
 }
 
 function dfs(graph, start) {
+
     
 }
 
@@ -38,9 +39,34 @@ function bfs(arr: number[]) {
     
 }
 
-function bubbleSort(arr: number[]) {
-    //
+export type BubbleSortState = {
+    array: number[],
+    swapped: boolean,
+}
 
+export function bubbleSort(
+    arr: number[],
+    callback?: (state: BubbleSortState) => void
+) {
+    const arrClone = structuredClone(arr)
+    let swapped: boolean
+    
+    for(let i=0; i<arrClone.length-1; i++) {
+        swapped = false
+        for(let j=0; j<arrClone.length-i-1; j++) {
+            if(arrClone[j] > arrClone[j+1]) {
+                [arrClone[j], arrClone[j+1]] = [arrClone[j+1], arrClone[j]]
+                swapped = true
+                callback?.({array: structuredClone(arrClone), swapped: swapped})
+            }
+        }
+        if(!swapped) {
+            callback?.({array: structuredClone(arrClone), swapped: swapped})
+            break
+        } 
+    }
+    
+    return arr
 }
 
 function selectionSort(arr: number[]) {
@@ -59,9 +85,7 @@ function quickSort(arr: number[]) {
 
 }
 
-const arr = [ 2, 3, 4, 10, 40, 50, 120, 123, 1235 ];
+const arr = [ 42, 32, 123, 4, 10, 41, 50, 120, 1 ];
 
-binarySearch(arr, 1235, (state) => {
-    console.log(`Searching in: ${state.array}, Mid index: ${state.midIndex}, Target: ${state.target}`);
-});
+console.log(bubbleSort(arr))
 
