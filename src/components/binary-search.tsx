@@ -18,17 +18,11 @@ export default function BinarySearch({array}: Props) {
       binarySearch(array, target, 0, (state) => {
         newHistory.push(state)
       });
-      console.log(newHistory)
       setHistory(newHistory); // Append new state to history
     }, [target])
   
-    useEffect(() => {
-    }, [history])
-  
-  
     // animate the history
     useEffect(() => {
-      console.log('isPlaying:', isPlaying, 'currentFrame:', currentFrame, 'history:', history)
       if (currentFrame === history.length - 1) {
         setIsPlaying(false)
       } else if (history.length > 1 && currentFrame > history.length - 1) { // defensively make sure i don't skip the end of the animation
@@ -48,12 +42,12 @@ export default function BinarySearch({array}: Props) {
     const buttonMessage = currentFrame === history.length - 1 ? 'Restart animation' : 'Start animation'
   
     return (
-        <>
+        <div className='flex flex-col gap-4 place-content-center h-screen'>
             <h1 className='font-bold mb-16'>Binary Search</h1>
             <div className='flex gap-4'>
             {array.map((number) => {
                 return (
-                <div className={`border border-stone-700 p-4 ${history[currentFrame]?.array.includes(number) ? 'bg-blue-800' : ''}`}>
+                <div className={`border border-sky-200 p-4 ${history[currentFrame]?.array.includes(number) ? 'bg-sky-200' : ''}`}>
                     {number}
                 </div>
                 )
@@ -61,6 +55,6 @@ export default function BinarySearch({array}: Props) {
             </div>
             <div className='my-8'>Target: {target}</div>
             <button className='btn btn-primary' disabled={isPlaying} onClick={() => resetAnimation()}>{buttonMessage}</button>
-        </>
+        </div>
     )
 }
