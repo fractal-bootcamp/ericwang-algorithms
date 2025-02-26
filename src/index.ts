@@ -31,6 +31,7 @@ export function binarySearch(
 }
 
 function dfs(graph, start) {
+
     
 }
 
@@ -38,9 +39,30 @@ function bfs(arr: number[]) {
     
 }
 
-function bubbleSort(arr: number[]) {
-    //
+export type BubbleSortState = {
+    array: number[],
+    swapped: boolean,
+}
 
+export function bubbleSort(
+    arr: number[],
+    callback?: (state: BubbleSortState) => void
+) {
+    let swapped: boolean
+    
+    for(let i=0; i<arr.length-1; i++) {
+        swapped = false
+        
+        for(let j=0; j<arr.length-i-1; j++) {
+            if(arr[j] > arr[j+1]) {
+                [arr[j], arr[j+1]] = [arr[j+1], arr[j]]
+                swapped = true
+                callback?.({array: arr, swapped: swapped})
+            }
+            if(!swapped) break
+        }
+    }
+    return arr
 }
 
 function selectionSort(arr: number[]) {
